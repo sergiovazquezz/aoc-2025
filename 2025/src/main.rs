@@ -1,6 +1,10 @@
-use std::env;
+use std::{env, fs::File, io::Read, path::PathBuf};
 
 mod day_1;
+mod day_2;
+mod day_3;
+
+const INPUT_PATH: &str = "./inputs";
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args: Vec<String> = env::args().collect();
@@ -18,9 +22,21 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     match day {
         1 => day_1::run()?,
-        2..NUM_DAYS => todo!("I have not yet completed these days"),
+        2 => day_2::run()?,
+        3 => day_3::run()?,
+        4..NUM_DAYS => todo!("I have not yet completed these days"),
         _ => unreachable!(),
     }
 
     Ok(())
+}
+
+pub fn read_input(day: &str) -> Result<String, std::io::Error> {
+    let file_path = PathBuf::from(INPUT_PATH).join(day).with_extension("txt");
+    let mut file = File::open(file_path)?;
+    let mut content = String::new();
+
+    file.read_to_string(&mut content)?;
+
+    Ok(content)
 }

@@ -1,22 +1,76 @@
-use std::{
-    fs::File,
-    io::{BufRead, BufReader},
-};
+use std::fs;
 
 pub fn run() -> Result<(), Box<dyn std::error::Error>> {
+    let input = fs::read_to_string("./inputs/day1.txt")?;
+
+    run_part_1(&input)?;
+    run_part_2(&input)?;
+
+    Ok(())
+}
+
+fn run_part_1(input: &str) -> Result<(), Box<dyn std::error::Error>> {
     let mut dial = Dial::new();
-    let moves_file = File::open("./inputs/day1.txt")?;
-    let reader = BufReader::new(moves_file);
 
-    for line in reader.lines().map_while(|l| l.ok()) {
-        let trimmed_line = line.trim();
+    for line in input.lines() {
+        let line = line.trim();
 
-        if trimmed_line.len() >= 2 {
-            dial.handle_rotation(trimmed_line);
+        if line.len() < 2 {
+            continue;
+        }
+
+        dial.handle_rotation(line);
+    }
+
+    println!("Part 1: {}", dial.code);
+
+    Ok(())
+}
+
+fn run_part_2(input: &str) -> Result<(), Box<dyn std::error::Error>> {
+    let mut dial = Dial::new();
+
+    for line in input.lines() {
+        let line = line.trim();
+
+        if line.len() < 2 {
+            continue;
+        }
+
+        let rotation = Dial::parse_rotation(line);
+
+        match rotation {
+            Some(Rotation::Left(steps)) => {
+                for _ in 0..steps {
+                    dial.position += 1;
+
+                    if dial.position == Dial::MAX_POS + 1 {
+                        dial.position = Dial::MIN_POS;
+                    }
+
+                    if dial.is_start() {
+                        dial.code += 1;
+                    }
+                }
+            }
+            Some(Rotation::Right(steps)) => {
+                for _ in 0..steps {
+                    dial.position -= 1;
+
+                    if dial.position == Dial::MIN_POS - 1 {
+                        dial.position = Dial::MAX_POS;
+                    }
+
+                    if dial.is_start() {
+                        dial.code += 1;
+                    }
+                }
+            }
+            _ => (),
         }
     }
 
-    println!("Part 1: {}", dial.final_code);
+    println!("Part 2: {}", dial.code);
 
     Ok(())
 }
@@ -27,8 +81,8 @@ enum Rotation {
 }
 
 struct Dial {
-    current_pos: i32,
-    final_code: u16,
+    position: i32,
+    code: u16,
 }
 
 impl Dial {
@@ -39,8 +93,8 @@ impl Dial {
 
     fn new() -> Dial {
         Dial {
-            current_pos: Self::INITIAL_POS,
-            final_code: 0,
+            position: Self::INITIAL_POS,
+            code: 0,
         }
     }
 
@@ -51,7 +105,7 @@ impl Dial {
             self.rotate(rotation);
 
             if self.is_start() {
-                self.final_code += 1;
+                self.code += 1;
             }
         }
     }
@@ -72,17 +126,19 @@ impl Dial {
     }
 
     fn rotate(&mut self, rotation: Rotation) {
-        let pos = self.current_pos;
+        let pos = self.position;
         let range = Self::RANGE;
 
-        self.current_pos = match rotation {
-            Rotation::Left(steps) => (pos - steps).rem_euclid(range),
-            Rotation::Right(steps) => (pos + steps).rem_euclid(range),
-        }
+        let unnormalized_position: i32 = match rotation {
+            Rotation::Left(steps) => pos - steps,
+            Rotation::Right(steps) => pos + steps,
+        };
+
+        self.position = unnormalized_position.rem_euclid(range);
     }
 
     fn is_start(&self) -> bool {
-        if self.current_pos == Self::MIN_POS {
+        if self.position == Self::MIN_POS {
             return true;
         }
 
