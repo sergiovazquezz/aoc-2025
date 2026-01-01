@@ -2,62 +2,56 @@ use std::collections::HashSet;
 
 use crate::read_input;
 
+type Range = (usize, usize);
+
 pub fn run() -> Result<(), Box<dyn std::error::Error>> {
     let input = read_input("day5")?;
-    let mut results = (0u32, 0u32);
+    let mut results = (0usize, 0u32);
 
-    let fresh_ids = get_fresh_ids(&input);
-    let current_ids 
+    let (fresh_ids, available_ids) = get_ids(&input);
 
-    results.0 = run_part_1()?;
+    results.0 = run_part_1(fresh_ids, available_ids);
+
+    println!("Part 1: {}", results.0);
 
     Ok(())
 }
 
-fn run_part_1() -> Result<u32, Box<dyn std::error::Error>> {
-    
+fn run_part_1(fresh_ids: Vec<Range>, available_ids: HashSet<usize>) -> usize {
+    available_ids
+        .iter()
+        .filter(|&&id| fresh_ids.iter().any(|f| f.0 <= id && f.1 >= id))
+        .count()
 }
 
-fn split_input(input: &str) -> (String, String) {
-    let mut found_empty_line: bool = false;
-    let mut fresh_ids_string = String::new();
-    let mut all_ids_string = String::new();
-
-    for line in input.lines() {
-        let line = line.trim();
-
-        if !found_empty_line && line.is_empty() {
-            found_empty_line = true;
-        }
-
-        if !found_empty_line {
-           fresh_ids_string.push_str(line);
-        } else {
-            all_ids_string.push_str(line);
-        }
-    }
-
-
-    (fresh_ids_string, all_ids_string)
+fn run_part_2(fresh_ids: Vec<Range>) -> usize {
+    todo!()
 }
 
-fn get_fresh_ids(input: &str) -> HashSet<u32> {
-    let mut fresh_ids: HashSet<u32> = HashSet::new();
+fn get_ids(input: &str) -> (Vec<Range>, HashSet<usize>) {
+    let (ranges_part, ids_part) = input
+        .split_once("\n\n")
+        .expect("expected blank line separating sections");
 
-    for line in input.lines() {
-        let line = line.trim();
+    let fresh_ids: Vec<Range> = ranges_part
+        .lines()
+        .map(|l| l.trim())
+        .filter(|l| !l.is_empty())
+        .map(|line| {
+            let (start, end) = line.split_once('-').unwrap();
+            (
+                start.parse::<usize>().unwrap(),
+                end.parse::<usize>().unwrap(),
+            )
+        })
+        .collect();
 
-        if line.is_empty() {
-            break;
-        }
+    let available_ids: HashSet<usize> = ids_part
+        .lines()
+        .map(|l| l.trim())
+        .filter(|l| !l.is_empty())
+        .map(|line| line.parse::<usize>().unwrap())
+        .collect();
 
-        let (start, end) = line.split_once("-").unwrap();
-
-        let start = start.parse::<u32>().unwrap();
-        let end = end.parse::<u32>().unwrap();
-
-        fresh_ids.extend(start..=end);
-    }
-
-    fresh_ids
+    (fresh_ids, available_ids)
 }
