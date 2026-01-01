@@ -3,6 +3,7 @@ use std::{env, fs::File, io::Read, path::PathBuf};
 mod day_1;
 mod day_2;
 mod day_3;
+mod day_5;
 
 const INPUT_PATH: &str = "./inputs";
 
@@ -22,9 +23,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     match day {
         1 => day_1::run()?,
-        2 => day_2::run()?,
         3 => day_3::run()?,
-        4..NUM_DAYS => todo!("I have not yet completed these days"),
+        5 => day_5::run()?,
+        6..NUM_DAYS | 2 | 4 => todo!("This day does not have a solution yet!"),
         _ => unreachable!(),
     }
 

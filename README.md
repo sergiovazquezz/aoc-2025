@@ -22,13 +22,13 @@ git clone https://github.com/sergiovazquezz/aoc-2025.git
 cd aoc-2025/
 ```
 
-Create the `inputs` folder in the root directory, where the input for the puzzles must be uploaded
+Create the `inputs` folder in the root directory, where the input for the puzzles must be placed
 
 ```bash
 mkdir inputs
 ```
 
-The input of each day must follow the pattern below
+The input for each day must follow the pattern below
 
 ```bash
 day<number>.txt
