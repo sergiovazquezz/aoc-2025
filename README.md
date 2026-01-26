@@ -7,6 +7,7 @@ I strongly encourage you try to solve them by yourself before checking or runnin
 
 - Day 1: Part 1 and 2.
 - Day 3: Part 1.
+- Day 5: Part 1.
 
 ## Requirements
 
