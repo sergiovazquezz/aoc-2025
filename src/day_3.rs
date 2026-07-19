@@ -1,6 +1,6 @@
-use crate::read_input;
+use crate::{Result, read_input};
 
-pub fn run() -> Result<(), Box<dyn std::error::Error>> {
+pub fn run() -> Result<()> {
     let input = read_input("day3")?;
     let mut results = (0u32, 0u32);
 
@@ -25,7 +25,7 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
     Ok(())
 }
 
-fn run_part_1(bank: &[u8]) -> Result<u32, Box<dyn std::error::Error>> {
+fn run_part_1(bank: &[u8]) -> Result<u32> {
     let (mut first, mut second) = ((0usize, 0u8), (0usize, 0u8));
     let mut new_first: bool = false;
 
@@ -44,7 +44,7 @@ fn run_part_1(bank: &[u8]) -> Result<u32, Box<dyn std::error::Error>> {
     Ok(bank_joltage)
 }
 
-fn run_part_2(bank: &[u8]) -> Result<u32, Box<dyn std::error::Error>> {
+fn run_part_2(bank: &[u8]) -> Result<u32> {
     let num_needed_batteries = 12;
     // let mut new_first: bool = false;
     let mut batteries: [(usize, u8); 12] = [(0, 0); 12];

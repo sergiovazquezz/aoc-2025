@@ -7,7 +7,9 @@ mod day_5;
 
 const INPUT_PATH: &str = "./inputs";
 
-fn main() -> Result<(), Box<dyn std::error::Error>> {
+type Result<T> = core::result::Result<T, Box<dyn std::error::Error>>;
+
+fn main() -> Result<()> {
     let args: Vec<String> = env::args().collect();
     const NUM_DAYS: u8 = 12;
 
@@ -32,7 +34,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     Ok(())
 }
 
-pub fn read_input(day: &str) -> Result<String, std::io::Error> {
+pub fn read_input(day: &str) -> Result<String> {
     let file_path = PathBuf::from(INPUT_PATH).join(day).with_extension("txt");
     let mut file = File::open(file_path)?;
     let mut content = String::new();

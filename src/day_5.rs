@@ -1,6 +1,6 @@
 use std::collections::HashSet;
 
-use crate::read_input;
+use crate::{Result, read_input};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 struct Range {
@@ -8,14 +8,14 @@ struct Range {
     end: usize,
 }
 
-pub fn run() -> Result<(), Box<dyn std::error::Error>> {
+pub fn run() -> Result<()> {
     let input = read_input("day5")?;
     let mut results = (0usize, 0usize);
 
     let (fresh_ids, available_ids) = get_ids(&input);
 
     results.0 = run_part_1(&fresh_ids, available_ids);
-    results.1 = run_part_2(&fresh_ids);
+    results.1 = run_part_2(fresh_ids);
 
     println!("Part 1: {}", results.0);
     println!("Part 2: {}", results.1);
@@ -30,13 +30,10 @@ fn run_part_1(fresh_ids: &[Range], available_ids: HashSet<usize>) -> usize {
         .count()
 }
 
-fn run_part_2(fresh_ids: &[Range]) -> usize {
-    let mut sorted_ids: Vec<Range> = fresh_ids.to_vec();
-    sorted_ids.sort_by_key(|k| k.start);
+fn run_part_2(mut fresh_ids: Vec<Range>) -> usize {
+    fresh_ids.sort_by_key(|k| k.start);
 
-    let mut final_ids: Vec<Range> = Vec::new().append(sorted_ids.first().unwrap());
-
-    for range in sorted_ids {}
+    // for range in sorted_ids {}
 
     0usize
 }
