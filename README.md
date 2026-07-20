@@ -1,17 +1,21 @@
 # Solutions to Advent of Code 2025
 
-The instructions and input for each problem can be found on the [official website](https://adventofcode.com/). \
-I strongly encourage you try to solve them by yourself before checking or running any of the provided solutions.
+The instructions and input for each problem can be found on the
+[official website](https://adventofcode.com/). \
+I strongly encourage you try to solve them by yourself before checking or
+running any of the provided solutions.
 
 ## Roadmap
 
 - Day 1: Part 1 and 2.
 - Day 3: Part 1.
+- Day 4: Part 1.
 - Day 5: Part 1.
 
 ## Requirements
 
-The solutions are developed with Rust, which you will need to [install](https://rust-lang.org/tools/install/) to run the solutions.
+The solutions are developed with Rust, which you will need to
+[install](https://rust-lang.org/tools/install/) to run the solutions.
 
 ## Setup
 
@@ -23,7 +27,8 @@ git clone https://github.com/sergiovazquezz/aoc-2025.git
 cd aoc-2025/
 ```
 
-Create the `inputs` folder in the root directory, where the input for the puzzles must be placed
+Create the `inputs` folder in the root directory, where the input for the
+puzzles must be placed
 
 ```bash
 mkdir inputs
