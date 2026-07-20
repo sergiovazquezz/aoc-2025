@@ -22,11 +22,11 @@ fn part_1(input: &str) -> Result<usize> {
         for x in 0..grid.width {
             let point = Point::new(x as i32, y as i32);
 
-            if grid[point] == b'@' {
+            if grid.get(point) == Some(b'@') {
                 let count = ADJACENT
                     .iter()
                     .map(|a| *a + point)
-                    .filter(|&p| grid.contains(p) && grid[p] == b'@')
+                    .filter(|&p| grid.get(p).is_some_and(|v| v == b'@'))
                     .count();
 
                 if count < 4 {

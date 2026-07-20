@@ -78,6 +78,18 @@ impl Grid {
 
         x < self.width && y < self.height
     }
+
+    #[inline]
+    pub fn get(&self, point: Point) -> Option<u8> {
+        let x = usize::try_from(point.x).ok()?;
+        let y = usize::try_from(point.y).ok()?;
+
+        if self.contains(point) {
+            return self.data.get(y * self.width + x).copied();
+        }
+
+        None
+    }
 }
 
 impl Index<Point> for Grid {
