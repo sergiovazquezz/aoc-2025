@@ -1,4 +1,4 @@
-use std::{env, fs::File, io::Read, path::PathBuf};
+use std::{env, fs, path::PathBuf};
 
 mod day_1;
 mod day_2;
@@ -36,10 +36,8 @@ fn main() -> Result<()> {
 
 pub fn read_input(day: &str) -> Result<String> {
     let file_path = PathBuf::from(INPUT_PATH).join(day).with_extension("txt");
-    let mut file = File::open(file_path)?;
-    let mut content = String::new();
 
-    file.read_to_string(&mut content)?;
+    let content = fs::read_to_string(file_path)?;
 
     Ok(content)
 }

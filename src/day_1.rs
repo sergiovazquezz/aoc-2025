@@ -1,7 +1,7 @@
-use std::fs;
+use crate::{Result, read_input};
 
-pub fn run() -> Result<(), Box<dyn std::error::Error>> {
-    let input = fs::read_to_string("./inputs/day1.txt")?;
+pub fn run() -> Result<()> {
+    let input = read_input("day1")?;
 
     run_part_1(&input)?;
     run_part_2(&input)?;
@@ -9,7 +9,7 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
     Ok(())
 }
 
-fn run_part_1(input: &str) -> Result<(), Box<dyn std::error::Error>> {
+fn run_part_1(input: &str) -> Result<()> {
     let mut dial = Dial::new();
 
     for line in input.lines() {
@@ -27,7 +27,7 @@ fn run_part_1(input: &str) -> Result<(), Box<dyn std::error::Error>> {
     Ok(())
 }
 
-fn run_part_2(input: &str) -> Result<(), Box<dyn std::error::Error>> {
+fn run_part_2(input: &str) -> Result<()> {
     let mut dial = Dial::new();
 
     for line in input.lines() {
