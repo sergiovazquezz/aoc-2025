@@ -1,6 +1,6 @@
 use std::collections::HashSet;
 
-use crate::{Result, read_input};
+use crate::{Result, print_results, read_input};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 struct Range {
@@ -10,15 +10,13 @@ struct Range {
 
 pub fn run() -> Result<()> {
     let input = read_input("day5")?;
-    let mut results = (0usize, 0usize);
 
     let (fresh_ids, available_ids) = get_ids(&input);
 
-    results.0 = run_part_1(&fresh_ids, available_ids);
-    results.1 = run_part_2(fresh_ids);
+    let first = run_part_1(&fresh_ids, available_ids);
+    let second = run_part_2(fresh_ids);
 
-    println!("Part 1: {}", results.0);
-    println!("Part 2: {}", results.1);
+    print_results(first, second);
 
     Ok(())
 }

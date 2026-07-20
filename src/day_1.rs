@@ -1,15 +1,17 @@
-use crate::{Result, read_input};
+use crate::{Result, print_results, read_input};
 
 pub fn run() -> Result<()> {
     let input = read_input("day1")?;
 
-    run_part_1(&input)?;
-    run_part_2(&input)?;
+    let first = run_part_1(&input)?;
+    let second = run_part_2(&input)?;
+
+    print_results(first, second);
 
     Ok(())
 }
 
-fn run_part_1(input: &str) -> Result<()> {
+fn run_part_1(input: &str) -> Result<u16> {
     let mut dial = Dial::new();
 
     for line in input.lines() {
@@ -22,12 +24,10 @@ fn run_part_1(input: &str) -> Result<()> {
         dial.handle_rotation(line);
     }
 
-    println!("Part 1: {}", dial.code);
-
-    Ok(())
+    Ok(dial.code)
 }
 
-fn run_part_2(input: &str) -> Result<()> {
+fn run_part_2(input: &str) -> Result<u16> {
     let mut dial = Dial::new();
 
     for line in input.lines() {
@@ -70,9 +70,7 @@ fn run_part_2(input: &str) -> Result<()> {
         }
     }
 
-    println!("Part 2: {}", dial.code);
-
-    Ok(())
+    Ok(dial.code)
 }
 
 enum Rotation {

@@ -1,4 +1,4 @@
-use crate::{Result, read_input};
+use crate::{Result, print_results, read_input};
 
 pub fn run() -> Result<()> {
     let input = read_input("day3")?;
@@ -19,8 +19,7 @@ pub fn run() -> Result<()> {
         results.1 += run_part_2(&bank)?;
     }
 
-    println!("Part 1: {}", results.0);
-    println!("Part 2: {}", results.1);
+    print_results(results.0, results.1);
 
     Ok(())
 }

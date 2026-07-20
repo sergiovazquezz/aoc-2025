@@ -1,17 +1,15 @@
 use crate::{
     Result,
     grid::{ADJACENT, Grid, Point},
-    read_input,
+    print_results, read_input,
 };
 
 pub fn run() -> Result<()> {
     let input = read_input("day4")?;
-    let mut results = (0usize, 0usize);
 
-    results.0 = part_1(&input)?;
+    let first = part_1(&input)?;
 
-    println!("Part 1: {}", results.0);
-    println!("Part 2: {}", results.1);
+    print_results(first, "TODO");
 
     Ok(())
 }

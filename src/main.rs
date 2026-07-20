@@ -1,4 +1,4 @@
-use std::{env, fs, path::PathBuf};
+use std::{env, fmt::Display, fs, path::PathBuf};
 
 mod day_1;
 mod day_2;
@@ -45,4 +45,10 @@ pub fn read_input(day: &str) -> Result<String> {
     let content = fs::read_to_string(file_path)?;
 
     Ok(content)
+}
+
+#[inline]
+pub fn print_results(first: impl Display, second: impl Display) {
+    println!("Part 1: {}", first);
+    println!("Part 2: {}", second);
 }
