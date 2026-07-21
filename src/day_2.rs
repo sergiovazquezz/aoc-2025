@@ -7,8 +7,9 @@ pub fn run() -> Result<()> {
     let ranges = parse_ranges(&input);
 
     let first = part_1(&ranges);
+    let second = part_2(&ranges);
 
-    print_results(first, "TODO");
+    print_results(first, second);
 
     Ok(())
 }
@@ -48,6 +49,48 @@ fn part_1(ranges: &[Range]) -> u64 {
     sum
 }
 
+fn part_2(ranges: &[Range]) -> u64 {
+    let mut sum = 0;
+
+    for range in ranges {
+        let start = range[0];
+        let end = range[1];
+
+        for num in start..=end {
+            let num_digits = num.ilog10() + 1;
+
+            for chunk_len in 1..=num_digits / 2 {
+                if num_digits % chunk_len != 0 {
+                    continue;
+                }
+
+                let divisor = 10u64.pow(chunk_len);
+
+                let expected_chunk = num % divisor;
+                let mut remaining = num / divisor;
+
+                let mut matches = true;
+
+                while remaining != 0 {
+                    if remaining % divisor != expected_chunk {
+                        matches = false;
+                        break;
+                    }
+
+                    remaining /= divisor;
+                }
+
+                if matches {
+                    sum += num;
+                    break;
+                }
+            }
+        }
+    }
+
+    sum
+}
+
 fn parse_ranges(input: &str) -> Vec<Range> {
     input
         .trim()
@@ -76,5 +119,11 @@ mod tests {
     fn part1_example() {
         let ranges = parse_ranges(EXAMPLE);
         assert_eq!(part_1(&ranges), 1227775554);
+    }
+
+    #[test]
+    fn part2_example() {
+        let ranges = parse_ranges(EXAMPLE);
+        assert_eq!(part_2(&ranges), 4174379265);
     }
 }

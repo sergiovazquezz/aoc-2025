@@ -7,10 +7,11 @@ running any of the provided solutions.
 
 ## Roadmap
 
-- Day 1: Part 1 and 2.
-- Day 3: Part 1.
-- Day 4: Part 1.
-- Day 5: Part 1.
+- Day 1: 1 & 2
+- Day 2: 1 & 2
+- Day 3: 1
+- Day 4: 1 & 2
+- Day 5: 1
 
 ## Requirements
 
