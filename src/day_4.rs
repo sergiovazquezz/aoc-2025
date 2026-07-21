@@ -7,16 +7,42 @@ use crate::{
 pub fn run() -> Result<()> {
     let input = read_input("day4")?;
 
-    let first = part_1(&input)?;
+    let first = part_1(&input);
+    let second = part_2(&input);
 
-    print_results(first, "TODO");
+    print_results(first, second);
 
     Ok(())
 }
 
-fn part_1(input: &str) -> Result<usize> {
-    let grid = Grid::new(input);
-    let mut result = 0;
+fn part_1(input: &str) -> usize {
+    let mut grid = Grid::new(input);
+
+    removable_rolls(&mut grid).len()
+}
+
+fn part_2(input: &str) -> usize {
+    let mut grid = Grid::new(input);
+    let mut count = 0;
+
+    loop {
+        let to_remove = removable_rolls(&mut grid);
+
+        if to_remove.is_empty() {
+            break;
+        }
+
+        count += to_remove.len();
+        for point in to_remove {
+            grid[point] = b'.';
+        }
+    }
+
+    count
+}
+
+fn removable_rolls(grid: &mut Grid) -> Vec<Point> {
+    let mut to_remove = Vec::<Point>::new();
 
     for y in 0..grid.height {
         for x in 0..grid.width {
@@ -30,13 +56,13 @@ fn part_1(input: &str) -> Result<usize> {
                     .count();
 
                 if count < 4 {
-                    result += 1;
+                    to_remove.push(point);
                 }
             }
         }
     }
 
-    Ok(result)
+    to_remove
 }
 
 #[cfg(test)]
@@ -58,6 +84,11 @@ mod tests {
 
     #[test]
     fn part1_example() {
-        assert_eq!(part_1(EXAMPLE).unwrap(), 13);
+        assert_eq!(part_1(EXAMPLE), 13);
+    }
+
+    #[test]
+    fn part2_example() {
+        assert_eq!(part_2(EXAMPLE), 43);
     }
 }
